@@ -1,0 +1,66 @@
+[package]
+name = "rusttemp"
+version = "0.1.0"
+# `cargo run` without --bin starts rusttemp (the package also has `cpu` and `gpu`).
+default-run = "rusttemp"
+edition = "2024"
+rust-version = "1.85"
+description = "Terminal CPU and GPU monitor for Windows and Linux: temperatures, clocks, load, power and throttling"
+# PolyForm Noncommercial 1.0.0: free for noncommercial use; no selling. See LICENSE.md.
+license = "PolyForm-Noncommercial-1.0.0"
+readme = "README.md"
+repository = "https://github.com/10001111/rusttemp"
+keywords = ["cpu", "gpu", "temperature", "monitor", "hardware"]
+categories = ["command-line-utilities", "hardware-support"]
+# Not published to crates.io; install from GitHub releases (see README).
+publish = false
+
+[dependencies]
+# Command-line parsing, help text and argument validation errors.
+clap = { version = "4.6.7", features = ["derive"] }
+# Cross-platform Ctrl+C handling (SIGINT on Unix, console control handler on Windows).
+ctrlc = "3.5.2"
+# NVIDIA GPU sensors (NVML), loaded at runtime from an explicit path; feature "nvidia".
+nvml-wrapper = { version = "0.13.0", optional = true }
+# JSON output.
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+
+[target.'cfg(windows)'.dependencies]
+# Raw Win32 bindings: PDH counters, D3DKMT + SetupAPI graphics adapter
+# enumeration, console VT mode, dynamic
+# loading of PawnIOLib.dll, CPU topology/affinity for per-core MSR reads, and
+# local-time conversion. Already present in the dependency graph through clap
+# and ctrlc.
+windows-sys = { version = "0.61.2", features = [
+    "Wdk_Graphics_Direct3D",
+    "Win32_Devices_DeviceAndDriverInstallation",
+    "Win32_Foundation",
+    "Win32_System_Console",
+    "Win32_System_LibraryLoader",
+    "Win32_System_Performance",
+    "Win32_System_Power",
+    "Win32_System_Registry",
+    "Win32_System_SystemInformation",
+    "Win32_System_Threading",
+    "Win32_System_Time",
+] }
+
+[target.'cfg(unix)'.dependencies]
+# localtime_r for local-time display. Already in the graph through ctrlc/nix.
+libc = "0.2.191"
+
+[dev-dependencies]
+# Temporary directories for mock sysfs trees in tests.
+tempfile = "3.27.0"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
+
+[features]
+default = ["nvidia"]
+# NVIDIA GPU sensors via NVML. Without an NVIDIA driver installed, NVML is
+# simply not found at runtime and the GPU is shown with generic data only.
+nvidia = ["dep:nvml-wrapper"]
