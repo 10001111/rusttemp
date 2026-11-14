@@ -94,7 +94,7 @@ Every value shows where it came from. Anything that can't be measured says
   several signals Windows/Linux report, never from the brand name alone. A GPU
   that can't be confirmed either way is shown as *unclassified*, never as
   dedicated.
-- **Live temperature monitor (`rusttemp`).** Package and per-core temperatures, with
+- **Live temperature table (`rusttemp --temps`).** Package and per-core temperatures, with
   current, min, average and max values and the time of each sensor's last
   update.
 - **CPU identification** (`--info`): manufacturer, model, family/model/stepping,
@@ -129,11 +129,11 @@ Every value shows where it came from. Anything that can't be measured says
 3. **Run it**, in the same window:
 
    ```powershell
-   rusttemp                # live temperature monitor, every sensor, refreshed every 1000 ms; Ctrl+C to stop
-   rusttemp cpu            # CPU report: model, temperatures, clocks, power, integrated GPU
-   rusttemp gpu            # dedicated GPU report
-   rusttemp cpu --watch    # live CPU report, refreshed every second (1000 ms); Ctrl+C to stop
-   rusttemp gpu --watch    # live GPU report, refreshed every second (1000 ms); Ctrl+C to stop
+   rusttemp                # live CPU monitor, refreshed every 1000 ms (same as rusttemp cpu --watch); Ctrl+C to stop
+   rusttemp cpu            # CPU report once: model, temperatures, clocks, power, integrated GPU
+   rusttemp gpu            # dedicated GPU report once
+   rusttemp gpu --watch    # live GPU monitor, refreshed every 1000 ms; Ctrl+C to stop
+   rusttemp --temps        # live table of every temperature sensor (min / avg / max)
    rusttemp --info         # CPU identification and health check
    ```
 
@@ -151,9 +151,9 @@ Every value shows where it came from. Anything that can't be measured says
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/10001111/rusttemp/main/install.sh | sh
-rusttemp            # live temperature monitor
-rusttemp cpu        # CPU report
-rusttemp gpu        # GPU report
+rusttemp            # live CPU monitor, every 1000 ms (same as rusttemp cpu --watch)
+rusttemp cpu        # CPU report once
+rusttemp gpu        # GPU report once
 ```
 
 No driver is needed on Linux. CPU power readings need root:
@@ -316,12 +316,13 @@ sudo ~/.local/bin/rusttemp cpu
 
 | Command | What it does |
 |---|---|
-| `rusttemp` | Live monitor. Refreshes every second; press **Ctrl+C** to stop. Prints a summary when it exits. |
+| `rusttemp` | Live CPU monitor: the `cpu` report refreshed every 1000 ms, the same as `rusttemp cpu --watch`. Press **Ctrl+C** to stop. |
+| `rusttemp --temps` | Live temperature table of every sensor, with min / avg / max, refreshed every second. Prints a summary when it exits. |
 | `rusttemp --info` | CPU information, speed and power, and health, with explanations |
 | `rusttemp --once` | Take one reading, then exit |
 | `rusttemp --sensors` | List every sensor found and how it was identified |
-| `rusttemp --interval 2000` | Refresh interval in milliseconds (100–3 600 000; default 1000) |
-| `rusttemp --count N` | Stop the monitor after N readings |
+| `rusttemp --temps --interval 2000` | Temperature-table refresh interval in milliseconds (100–3 600 000; default 1000) |
+| `rusttemp --temps --count N` | Stop the temperature table after N readings |
 | `rusttemp --json` | Machine-readable output (see [docs/REFERENCE.md](docs/REFERENCE.md#json-output)) |
 | `rusttemp --elevated C --high C --critical C` | Set the warning thresholds in °C (see [Configuration](#configuration)) |
 | `rusttemp --utc` | Show times in UTC instead of local time |
@@ -391,7 +392,7 @@ What each GPU value means:
 | Thermal / Power Throttling | The GPU is currently slowing down because of heat or its power limit |
 | Classified As | Why RustTemp decided the GPU is integrated or dedicated |
 
-### `rusttemp` live monitor
+### `rusttemp --temps` temperature table
 
 ### Live monitor
 

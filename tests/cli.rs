@@ -62,6 +62,33 @@ fn run(root: &Path, args: &[&str]) -> Output {
         .expect("failed to run rusttemp")
 }
 
+#[test]
+fn bare_rusttemp_is_the_live_cpu_report() {
+    let mut child = Command::new(bin())
+        .env("NO_COLOR", "1")
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .expect("failed to start rusttemp");
+    std::thread::sleep(std::time::Duration::from_millis(3500));
+    let still_running = child.try_wait().unwrap().is_none();
+    let _ = child.kill();
+    let out = child.wait_with_output().unwrap();
+    let text = String::from_utf8_lossy(&out.stdout);
+    assert!(still_running, "should keep refreshing: {text}");
+    assert!(text.contains("RUST HARDWARE MONITOR — CPU"), "{text}");
+    // A refresh every second: at least two frames in 3.5 s.
+    assert!(text.matches("CPU INFORMATION").count() >= 2, "{text}");
+}
+
+#[test]
+fn temps_flag_runs_the_temperature_table() {
+    let t = mock_tree();
+    let o = run(t.path(), &["--temps", "--count", "1", "--interval", "100"]);
+    assert!(o.status.success());
+    assert!(stdout(&o).contains("CPU SENSORS"), "{}", stdout(&o));
+}
+
 fn stdout(o: &Output) -> String {
     String::from_utf8(o.stdout.clone()).unwrap()
 }

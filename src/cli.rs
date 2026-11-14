@@ -15,11 +15,14 @@ pub const MIN_INTERVAL_MS: u64 = 100;
 /// Largest accepted refresh interval in milliseconds (1 hour).
 pub const MAX_INTERVAL_MS: u64 = 3_600_000;
 
-/// Terminal-only CPU temperature monitor.
+/// Terminal CPU and GPU monitor.
 ///
-/// Without options, RustTemp continuously displays every discovered
-/// temperature sensor with current, minimum, average and maximum values until
-/// Ctrl+C is pressed.
+/// Without arguments, `rusttemp` shows the live CPU report, refreshed every
+/// second until Ctrl+C (the same as `rusttemp cpu --watch`).
+///
+/// `rusttemp --temps` (or any of the options below without --info, --once or
+/// --sensors) shows the live temperature table: every discovered sensor with
+/// current, minimum, average and maximum values.
 #[derive(Debug, Parser)]
 #[command(
     name = "rusttemp",
@@ -33,6 +36,11 @@ pub struct Cli {
     /// `gpu` commands.
     #[command(subcommand)]
     pub command: Option<Command>,
+
+    /// Live temperature table of every sensor (the monitor that `rusttemp`
+    /// alone showed before version 0.1.1).
+    #[arg(long, conflicts_with_all = ["once", "info", "sensors"])]
+    pub temps: bool,
 
     /// Take a single reading and exit.
     #[arg(long, conflicts_with_all = ["sensors", "count"])]

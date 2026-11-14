@@ -239,7 +239,7 @@
         Write-Host ''
         Write-Host 'Done! Try it now:' -ForegroundColor Green
         Write-Host ''
-        Write-Host '    rusttemp          live temperature monitor (refreshes every second; Ctrl+C to stop)'
+        Write-Host '    rusttemp          live CPU monitor, refreshed every 1000 ms (same as rusttemp cpu --watch)'
         Write-Host '    rusttemp cpu      CPU report: model, temperatures, clocks, power, integrated GPU'
         Write-Host '    rusttemp gpu      dedicated GPU report'
         Write-Host '    (shortcuts: cpu, gpu)   add --watch to keep refreshing, --help for options'

@@ -6,6 +6,16 @@ All notable changes to RustTemp are listed here. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-14
+
+### Changed
+
+- **`rusttemp` on its own now starts the live CPU monitor**, the same as
+  `rusttemp cpu --watch`. It refreshes every 1000 ms until Ctrl+C.
+- The previous default, the live table of every temperature sensor, is now
+  `rusttemp --temps`. Options such as `--interval`, `--count` and `--json`
+  still select that table, as before.
+
 ## [0.1.0] - 2026-11-13
 
 First public release.
@@ -53,5 +63,6 @@ First public release.
 - **GitHub Actions** for CI (format, clippy, tests on Windows and Linux,
   MSRV) and for release builds.
 
-[Unreleased]: https://github.com/10001111/rusttemp/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/10001111/rusttemp/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/10001111/rusttemp/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/10001111/rusttemp/releases/tag/v0.1.0

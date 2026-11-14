@@ -1,6 +1,6 @@
 [package]
 name = "rusttemp"
-version = "0.1.0"
+version = "0.1.1"
 # `cargo run` without --bin starts rusttemp (the package also has `cpu` and `gpu`).
 default-run = "rusttemp"
 edition = "2024"
