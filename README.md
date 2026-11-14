@@ -509,6 +509,8 @@ detects a VM.
   list of registers. Its source and checksums are in
   [assets/pawnio/README.md](assets/pawnio/README.md).
 - Administrator rights are only needed for those register reads.
+- Full details: [PRIVACY.md](PRIVACY.md) (no data collected) and
+  [SECURITY.md](SECURITY.md) (how to report a vulnerability).
 
 ## Known limitations
 
@@ -685,8 +687,10 @@ RustTemp is licensed under the
   any other third-party platform, bundling it into a paid product, or offering
   it as a paid service.
 
-The licence requires no copyright notice to be displayed. Anyone who passes
-RustTemp on must include the licence terms (or their URL). This summary is
+**No copyright mark is used:** the licence requires no copyright notice.
+Anyone who passes RustTemp on must include the licence terms (or their URL)
+and the two `Required Notice:` lines in [NOTICE](NOTICE), which repeat that
+RustTemp may not be sold. This summary is
 only a convenience; the [licence text](LICENSE.md) is what applies.
 
 **Third-party components** keep their own licences:

@@ -1,0 +1,11 @@
+RustTemp
+
+Required Notice: RustTemp is licensed under the PolyForm Noncommercial License 1.0.0 (LICENSE.md, https://polyformproject.org/licenses/noncommercial/1.0.0) for noncommercial use only.
+Required Notice: RustTemp may not be sold, in original or modified form, on any app store, marketplace or other third-party platform, nor included in any paid product or service.
+
+Under the licence's "Notices" section, anyone who passes on any part of
+RustTemp must include the licence terms (or their URL) and the lines above
+that begin with "Required Notice:".
+
+Third-party components (the PawnIO IntelMSR module and the Rust crates
+listed in THIRD_PARTY_LICENSES.md) keep their own licences.

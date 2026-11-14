@@ -41,7 +41,7 @@ jobs:
           $name = 'rusttemp-x86_64-pc-windows-msvc'
           $dir = "dist/$name"
           New-Item -ItemType Directory -Path $dir -Force | Out-Null
-          Copy-Item target/release/cpu.exe, target/release/gpu.exe, target/release/rusttemp.exe, uninstall.ps1, README.md, LICENSE.md -Destination $dir
+          Copy-Item target/release/cpu.exe, target/release/gpu.exe, target/release/rusttemp.exe, uninstall.ps1, README.md, LICENSE.md, NOTICE, PRIVACY.md -Destination $dir
           python scripts/third_party_licenses.py --target x86_64-pc-windows-msvc --out "$dir/THIRD_PARTY_LICENSES.md"
           & "$dir/rusttemp.exe" --version
           Compress-Archive -Path "$dir/*" -DestinationPath "dist/$name.zip"
@@ -77,7 +77,7 @@ jobs:
           dir="dist/$name"
           mkdir -p "$dir"
           for p in cpu gpu rusttemp; do cp "target/x86_64-unknown-linux-musl/release/$p" "$dir/"; done
-          cp README.md LICENSE.md "$dir/"
+          cp README.md LICENSE.md NOTICE PRIVACY.md "$dir/"
           python3 scripts/third_party_licenses.py --target x86_64-unknown-linux-musl --no-default-features --out "$dir/THIRD_PARTY_LICENSES.md"
           "$dir/rusttemp" --version
           tar -czf "dist/$name.tar.gz" -C "$dir" .
