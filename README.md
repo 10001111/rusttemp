@@ -47,7 +47,7 @@ Every value shows where it came from. Anything that can't be measured says
 > irm https://raw.githubusercontent.com/10001111/rusttemp/main/install.ps1 | iex
 > ```
 >
-> Then run `rusttemp cpu` or `rusttemp gpu`. See the
+> Then run `rusttemp`, `rusttemp cpu` or `rusttemp gpu`. See the
 > [Quick start](#quick-start-windows) for the three steps.
 
 ## Table of contents
@@ -129,15 +129,18 @@ Every value shows where it came from. Anything that can't be measured says
 3. **Run it**, in the same window:
 
    ```powershell
+   rusttemp                # live temperature monitor, every sensor, refreshed every 1000 ms; Ctrl+C to stop
    rusttemp cpu            # CPU report: model, temperatures, clocks, power, integrated GPU
    rusttemp gpu            # dedicated GPU report
-   rusttemp gpu --watch    # live view, refreshed every second (1000 ms); Ctrl+C to stop
+   rusttemp cpu --watch    # live CPU report, refreshed every second (1000 ms); Ctrl+C to stop
+   rusttemp gpu --watch    # live GPU report, refreshed every second (1000 ms); Ctrl+C to stop
+   rusttemp --info         # CPU identification and health check
    ```
 
    `cpu` and `gpu` on their own are shortcuts for the same commands.
 
 **Every time after that:** open PowerShell as Administrator and run
-`rusttemp cpu` or `rusttemp gpu`.
+`rusttemp`, `rusttemp cpu` or `rusttemp gpu`.
 
 > [!NOTE]
 > Without administrator rights RustTemp still works: it shows the CPU model,
@@ -148,7 +151,9 @@ Every value shows where it came from. Anything that can't be measured says
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/10001111/rusttemp/main/install.sh | sh
-rusttemp cpu
+rusttemp            # live temperature monitor
+rusttemp cpu        # CPU report
+rusttemp gpu        # GPU report
 ```
 
 No driver is needed on Linux. CPU power readings need root:

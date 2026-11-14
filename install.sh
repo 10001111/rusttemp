@@ -117,6 +117,7 @@ esac
 say ""
 say "Done! Try it now:"
 say ""
+say "    rusttemp          live temperature monitor (refreshes every second; Ctrl+C to stop)"
 say "    rusttemp cpu      CPU report: model, temperatures, clocks, power, integrated GPU"
 say "    rusttemp gpu      dedicated GPU report"
 say "    (shortcuts: cpu, gpu)   add --watch to keep refreshing, --help for options"
